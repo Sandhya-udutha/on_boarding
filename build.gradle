@@ -1,0 +1,84 @@
+plugins {
+	id 'org.springframework.boot' version '3.5.10'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'java'
+	id 'eclipse'
+}
+
+group = 'com.dtt.onboarding'
+version = ''
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+
+dependencies {
+	implementation files("DAESLogIntegrity.jar");
+	implementation 'org.apache.httpcomponents.client5:httpclient5'
+	implementation 'org.apache.httpcomponents.core5:httpcore5'
+	implementation 'org.postgresql:postgresql:42.7.3'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation('org.springframework.boot:spring-boot-starter-web') {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+	}
+	implementation 'org.springframework.boot:spring-boot-starter-undertow'
+
+	implementation 'commons-io:commons-io:2.14.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'com.auth0:java-jwt:3.9.0'
+	implementation 'commons-fileupload:commons-fileupload:1.6.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.imgscalr:imgscalr-lib:4.2'
+	implementation 'io.sentry:sentry-spring-boot-starter-jakarta:7.16.0'
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'com.jcraft:jsch:0.1.55'
+	implementation 'io.github.classgraph:classgraph:4.8.150'
+	implementation 'org.webjars:webjars-locator-core:0.50'
+	implementation 'io.minio:minio:8.6.0'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-vault-config'
+	implementation 'org.springframework.vault:spring-vault-core'
+
+	// --- FIXED JACKSON VERSIONS ---
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.15.0'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.0'
+
+			// Updated Spring Framework security patches
+		implementation 'org.springframework:spring-core:6.2.11'
+		implementation 'org.springframework:spring-webmvc:6.2.11'
+		implementation 'org.springframework:spring-web:6.2.11'
+		implementation 'org.springframework:spring-beans:6.2.11'
+		implementation 'org.springframework:spring-expression:6.2.11'
+		implementation 'org.springframework:spring-context:6.2.11'
+	
+}
+
+
+ext {
+	springCloudVersion = "2023.0.3"
+}
+
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+
+
