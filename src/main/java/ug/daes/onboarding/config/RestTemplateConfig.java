@@ -38,31 +38,16 @@ public class RestTemplateConfig {
     }
 
     @Bean
-    public RestTemplate restTemplate()
-            throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+    public RestTemplate restTemplate() {
 
-        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+        CloseableHttpClient httpClient = HttpClients.custom().build();
 
-        SSLContext sslContext = SSLContextBuilder.create()
-                .loadTrustMaterial(null, acceptingTrustStrategy)
-                .build();
+        HttpComponentsClientHttpRequestFactory requestFactory =
+                new HttpComponentsClientHttpRequestFactory(httpClient);
 
-        var tlsStrategy = new DefaultClientTlsStrategy(sslContext);
-
-        HttpClientConnectionManager connectionManager =
-                PoolingHttpClientConnectionManagerBuilder.create()
-                        .setTlsSocketStrategy(tlsStrategy)
-                        .build();
-
-        CloseableHttpClient httpClient = HttpClients.custom()
-                .setConnectionManager(connectionManager)
-                .build();
-
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
-
-        requestFactory.setConnectionRequestTimeout(300_000);
-        requestFactory.setConnectTimeout(300_000);
-        requestFactory.setReadTimeout(300_000);
+        requestFactory.setConnectionRequestTimeout(300000);
+        requestFactory.setConnectTimeout(300000);
+        requestFactory.setReadTimeout(300000);
 
         return new RestTemplate(requestFactory);
     }

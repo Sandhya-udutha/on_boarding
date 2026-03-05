@@ -1554,7 +1554,7 @@ public class SubscriberServiceImpl implements SubscriberServiceIface {
             }
         } catch (JDBCConnectionException | ConstraintViolationException | DataException | LockAcquisitionException
                  | PessimisticLockException | QueryTimeoutException | SQLGrammarException | GenericJDBCException ex) {
-            ex.printStackTrace();
+
             logger.error(CLASS + "saveSubscriberData Exception {}", ex.getMessage());
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(
                     AppUtil.createApiResponse(false, SOMETHING_WENT_WRONG, null));
